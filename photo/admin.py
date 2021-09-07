@@ -1,6 +1,14 @@
 from django.contrib import admin
 
-# Register your models here.
 from photo.models import Photo
 
-admin.site.register(Photo)
+
+class PhotoAdmin(admin.ModelAdmin):
+    list_display = ['id', 'author', 'created', 'updated']
+    raw_id_fields = ['author']
+    list_filter = ['created', 'updated', 'author']
+    search_fields = ['text', 'created'] # 검색할 필드 선택(foreignKey 제외)
+    ordering = ['updated', '-created']
+
+
+admin.site.register(Photo, PhotoAdmin)
